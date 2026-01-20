@@ -5,12 +5,12 @@ on:
     types: [published]
 
 jobs:
-  build-win:
+  create-pr:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
         - name: create pull request
-          run: gh pr create --base v4.x --head main --title "Bump v4.x branch on release publish"
+          run: gh pr create --base v4.x --title "Bump v4.x branch on release publish" --fill
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
