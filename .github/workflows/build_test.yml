@@ -25,3 +25,9 @@ jobs:
 
       - name: Run tests
         run: cargo test --verbose
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: tabletdrivercleanup
+          path: ./dist/tabletdrivercleanup.zip
+          if-no-files-found: error
