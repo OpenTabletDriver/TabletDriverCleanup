@@ -22,6 +22,12 @@
     "class": "4d36e978-e325-11ce-bfc1-08002be10318"
   },
   {
+    "friendly_name": "WinUSB (Gaomon)",
+    "original_name": "gaomon_tablet_\\(interface_\\d\\+).inf",
+    "provider": "libwdi",
+    "class": "88bae032-5a81-49f0-bc3d-a4ff138216d6"
+  },
+  {
     "friendly_name": "Hanvon Ugee Mouse Filter",
     "original_name": "hanvonugeemfilter\\.inf",
     "provider": "Hanvon Ugee Technology",
