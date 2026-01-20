@@ -1,0 +1,16 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-win:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+  steps:
+    - name: create pull request
+      run: gh pr create --base v4.x --head main --title "Bump v4.x branch on release publish"
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
