@@ -192,6 +192,12 @@
     "class": "745a17a0-74d3-11d0-b6fe-00a0c90f57da"
   },
   {
+    "friendly_name": "Wacom Windows Update Helper App Service",
+    "original_name": "wacomwuhaservicecom\\.inf",
+    "provider": "Wacom Technology",
+    "class": "5c4c3332-344d-483c-8739-259e934c9cc8"
+  },
+  {
     "friendly_name": "Wacom WUSD",
     "original_name": "wacom_wusd\\.inf",
     "provider": "Wacom Technology",
