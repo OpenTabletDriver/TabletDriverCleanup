@@ -22,6 +22,11 @@
     "class": "4d36e978-e325-11ce-bfc1-08002be10318"
   },
   {
+    "friendly_name": "Generic LibUsbK Driver",
+    "original_name": "tablet[ _]monitor[ _]\\([Ii]nterface[ _]\\d+\\)\\.inf",
+    "provider": "(libusbK|libusb-win32)"
+  },
+  {
     "friendly_name": "Hanvon Ugee Mouse Filter",
     "original_name": "hanvonugeemfilter\\.inf",
     "provider": "Hanvon Ugee Technology",
