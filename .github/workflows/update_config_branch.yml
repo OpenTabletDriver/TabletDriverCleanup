@@ -11,6 +11,6 @@ jobs:
       contents: write
     steps:
         - name: create pull request
-          run: gh pr create --base v4.x --title "Bump v4.x branch on release publish" --body ""
+          run: gh pr create --base v4.x --title "Bump v4.x branch on release publish" --fill
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
