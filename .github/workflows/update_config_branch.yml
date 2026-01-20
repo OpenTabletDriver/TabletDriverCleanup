@@ -13,6 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Create pull request
-        run: gh pr create --base v4.x --title "Bump v4.x branch on release publish" --fill
+        run: gh pr create --base v4.x --title "Bump v4.x branch on release publish" --body ""
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
