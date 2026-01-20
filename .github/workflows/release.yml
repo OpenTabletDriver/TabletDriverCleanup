@@ -25,7 +25,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: ${{ github.ref_name }}
+          name: TabletDriverCleanup ${{ github.ref_name }}
           draft: true
           files: ./dist/tabletdrivercleanup.zip
         env:
