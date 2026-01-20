@@ -4,5 +4,3 @@
 - Extract the contents of the zip.
 - Run `tabletdrivercleanup.exe` as administrator.
 
-## What's Changed
-
