@@ -4,7 +4,7 @@ use std::path::Path;
 
 use error_stack::{bail, report, IntoReport, Result, ResultExt};
 use include_dir::include_dir;
-use log::{error, info, warn};
+use log::{info, warn};
 use thiserror::Error;
 
 use crate::{no_color, State};
