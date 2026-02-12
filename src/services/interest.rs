@@ -33,6 +33,7 @@ lazy_static! {
             "XenceLabs",
             "XENX",
             "XP[-| ]?Pen",
+            "GSPY",
         ])
     };
     static ref COUNTER_INTEREST_CACHE: HashMap::<&'static str, Regex> =
