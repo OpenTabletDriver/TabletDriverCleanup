@@ -4,7 +4,7 @@ A CLI program that cleanly uninstalls tablet drivers.
 
 ## Instructions
 
-- Download `tabletdrivercleanup.zip` from [latest release](https://github.com/X9VoiD/TabletDriverCleanup/releases).
+- Download `tabletdrivercleanup.zip` from [latest release](https://github.com/OpenTabletDriver/TabletDriverCleanup/releases).
 - Extract the contents of the zip file.
 - Run as administrator.
 

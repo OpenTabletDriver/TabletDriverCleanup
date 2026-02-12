@@ -1,0 +1,19 @@
+name: Update Config Branch
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Create pull request
+        run: gh pr create --base v4.x --title "Bump v4.x branch on release publish" --body ""
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

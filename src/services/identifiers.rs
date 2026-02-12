@@ -134,7 +134,7 @@ async fn get_resource_online(
         bail!(RetrievalErr::Disallowed("online"))
     }
 
-    let base_url = "https://raw.githubusercontent.com/X9VoiD/TabletDriverCleanup";
+    let base_url = "https://raw.githubusercontent.com/OpenTabletDriver/TabletDriverCleanup";
     let git_ref = "v4.x";
     let url = format!("{base_url}/{git_ref}/config/{identifier}");
 
