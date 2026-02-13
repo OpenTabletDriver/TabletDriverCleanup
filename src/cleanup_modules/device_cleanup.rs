@@ -224,3 +224,21 @@ fn is_of_interest(device: &Device) -> bool {
 
     candidate_iter(strings)
 }
+
+#[tokio::test]
+async fn test_init() {
+    let mut module = DeviceCleanupModule::new();
+    let state = State {
+        dry_run: true,
+        interactive: false,
+        use_cache: true,
+        allow_updates: false,
+        current_path: Default::default(),
+    };
+    module.initialize(&state).await.unwrap();
+    module.get_objects_to_uninstall().iter().for_each(|d| {
+        regex_cache::cached_match(Some(""), d.device_desc.as_deref());
+        regex_cache::cached_match(Some(""), d.manufacturer.as_deref());
+        regex_cache::cached_match(Some(""), d.hardware_id.as_deref());
+    });
+}

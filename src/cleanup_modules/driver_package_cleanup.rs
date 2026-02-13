@@ -412,3 +412,21 @@ fn to_command(command: &str) -> std::process::Command {
 
     command
 }
+
+#[tokio::test]
+async fn test_init() {
+    let mut module = DriverPackageCleanupModule::new();
+    let state = State {
+        dry_run: true,
+        interactive: false,
+        use_cache: true,
+        allow_updates: false,
+        current_path: Default::default(),
+    };
+    module.initialize(&state).await.unwrap();
+    module.get_objects_to_uninstall().iter().for_each(|d| {
+        regex_cache::cached_match(Some(""), d.display_name.as_deref());
+        regex_cache::cached_match(Some(""), d.display_version.as_deref());
+        regex_cache::cached_match(Some(""), d.publisher.as_deref());
+    });
+}

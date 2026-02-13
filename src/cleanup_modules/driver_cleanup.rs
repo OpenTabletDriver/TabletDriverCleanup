@@ -186,3 +186,20 @@ fn is_of_interest(driver: &Driver) -> bool {
     let strings = [driver.inf_original_name(), driver.provider()];
     candidate_iter(strings.into_iter().flatten())
 }
+
+#[tokio::test]
+async fn test_init() {
+    let mut module = DriverCleanupModule::new();
+    let state = State {
+        dry_run: true,
+        interactive: false,
+        use_cache: true,
+        allow_updates: false,
+        current_path: Default::default(),
+    };
+    module.initialize(&state).await.unwrap();
+    module.get_objects_to_uninstall().iter().for_each(|d| {
+        regex_cache::cached_match(Some(""), d.original_name.as_deref());
+        regex_cache::cached_match(Some(""), d.provider.as_deref());
+    });
+}
