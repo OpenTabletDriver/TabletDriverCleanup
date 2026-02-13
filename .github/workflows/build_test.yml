@@ -23,11 +23,20 @@ jobs:
         run: |
           powershell ./build.ps1
 
-      - name: Run tests
-        run: cargo test --verbose
-
       - uses: actions/upload-artifact@v6
         with:
           name: tabletdrivercleanup
           path: ./build
           if-no-files-found: error
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup dependencies
+        run: |
+          rustup update stable
+          rustup default stable
+
+      - name: Run tests
+        run: cargo test --verbose
