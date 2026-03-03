@@ -39,4 +39,4 @@ jobs:
           rustup default stable
 
       - name: Run tests
-        run: cargo test --verbose
+        run: cargo test
