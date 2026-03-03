@@ -16,7 +16,7 @@ mkdir ".\dumps\DriverStore" 2>nul
 for /D %%G in ("C:\Windows\System32\DriverStore\FileRepository\*") DO (
     mkdir ".\dumps\DriverStore\%%~nxG" 2>nul
     for /F %%H in ("%%~G\*.inf") DO (
-        xcopy /Q /Y "%%H" .\dumps\DriverStore\%%~nxG > nul
+        xcopy /Q /Y "%%~H" ".\dumps\DriverStore\%%~nxG" >nul
         <nul set /p "=Dumped '%%~nxH'                                 !CR!"
     )
 )
