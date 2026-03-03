@@ -11,10 +11,10 @@ tabletdrivercleanup.exe --dump
 pnputil /enum-drivers > .\dumps\pnputil_drivers.txt
 pnputil /enum-devices /connected /drivers > .\dumps\pnputil_devices.txt
 
-md .\dumps\DriverStore
+mkdir ".\dumps\DriverStore" 2>nul
 
 for /D %%G in ("C:\Windows\System32\DriverStore\FileRepository\*") DO (
-    md .\dumps\DriverStore\%%~nxG
+    mkdir ".\dumps\DriverStore\%%~nxG" 2>nul
     for /F %%H in ("%%~G\*.inf") DO (
         xcopy /Q /Y "%%H" .\dumps\DriverStore\%%~nxG > nul
         <nul set /p "=Dumped '%%~nxH'                                 !CR!"
