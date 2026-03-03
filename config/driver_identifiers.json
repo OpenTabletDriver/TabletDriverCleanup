@@ -33,9 +33,9 @@
     "provider": "(libusbK|libusb-win32)"
   },
   {
-    "friendly_name": "Intuos LibUsbK Driver",
-    "original_name": "intuos.*\\.inf",
-    "provider": "(libusbK|libusb-win32)"
+    "friendly_name": "Wacom LibUsb/Libwdi Driver",
+    "original_name": "(intuos|(c|p)t(l|h|k)-).*\\.inf",
+    "provider": "(libusb|libusb-win32)"
   },
   {
     "friendly_name": "Hanvon Ugee Mouse Filter",
