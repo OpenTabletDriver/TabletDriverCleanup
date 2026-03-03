@@ -22,5 +22,10 @@
     "manufacturer": "GSPY",
     "hardware_id": "VID_(5543|28BD|256C|0A12|172F|0458|08CA|0483|0B57|2FEB|0543|056A|0531|2D80)",
     "class_uuid": "6264e7e6-b95c-4033-908f-86e7ab9e2555"
+  },
+  {
+    "friendly_name": "LibUsb/Libwdi",
+    "hardware_id": "VID_(5543|28BD|256C|0A12|172F|0458|08CA|0483|0B57|2FEB|0543|056A|0531|2D80)",
+    "inf_provider": "(libusb|libwdi)"
   }
 ]

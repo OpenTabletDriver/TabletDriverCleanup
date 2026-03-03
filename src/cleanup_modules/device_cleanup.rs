@@ -188,12 +188,14 @@ pub struct DeviceToUninstall {
     manufacturer: Option<String>,
     hardware_id: Option<String>,
     class_uuid: Option<Uuid>,
+    inf_provider: Option<String>,
 }
 
 impl ToUninstall<Device> for DeviceToUninstall {
     fn matches(&self, other: &Device) -> bool {
         regex_cache::cached_match(other.description(), self.device_desc.as_deref())
             && regex_cache::cached_match(other.manufacturer(), self.manufacturer.as_deref())
+            && regex_cache::cached_match(other.inf_provider(), self.inf_provider.as_deref())
             && match self.class_uuid {
                 Some(uuid) => *other.class_guid() == uuid,
                 None => true,
@@ -240,5 +242,6 @@ async fn test_init() {
         regex_cache::cached_match(Some(""), d.device_desc.as_deref());
         regex_cache::cached_match(Some(""), d.manufacturer.as_deref());
         regex_cache::cached_match(Some(""), d.hardware_id.as_deref());
+        regex_cache::cached_match(Some(""), d.inf_provider.as_deref());
     });
 }
