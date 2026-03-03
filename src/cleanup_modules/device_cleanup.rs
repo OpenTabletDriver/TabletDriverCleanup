@@ -188,12 +188,14 @@ pub struct DeviceToUninstall {
     manufacturer: Option<String>,
     hardware_id: Option<String>,
     class_uuid: Option<Uuid>,
+    inf_provider: Option<String>,
 }
 
 impl ToUninstall<Device> for DeviceToUninstall {
     fn matches(&self, other: &Device) -> bool {
         regex_cache::cached_match(other.description(), self.device_desc.as_deref())
             && regex_cache::cached_match(other.manufacturer(), self.manufacturer.as_deref())
+            && regex_cache::cached_match(other.inf_provider(), self.inf_provider.as_deref())
             && match self.class_uuid {
                 Some(uuid) => *other.class_guid() == uuid,
                 None => true,
@@ -223,4 +225,23 @@ fn is_of_interest(device: &Device) -> bool {
     .chain(device.hardware_ids().iter().map(|s| s.as_str()));
 
     candidate_iter(strings)
+}
+
+#[tokio::test]
+async fn test_init() {
+    let mut module = DeviceCleanupModule::new();
+    let state = State {
+        dry_run: true,
+        interactive: false,
+        use_cache: true,
+        allow_updates: false,
+        current_path: Default::default(),
+    };
+    module.initialize(&state).await.unwrap();
+    module.get_objects_to_uninstall().iter().for_each(|d| {
+        regex_cache::cached_match(Some(""), d.device_desc.as_deref());
+        regex_cache::cached_match(Some(""), d.manufacturer.as_deref());
+        regex_cache::cached_match(Some(""), d.hardware_id.as_deref());
+        regex_cache::cached_match(Some(""), d.inf_provider.as_deref());
+    });
 }
