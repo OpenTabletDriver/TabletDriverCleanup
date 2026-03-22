@@ -2,6 +2,8 @@
 
 All config attributes are optional. Any omitted attributes will be ignored when matching.
 
+All regex matches are case insensitive. Use `\\` for backslashes, regex `\d` for example should be entered as `\\d`.
+
 ### `device_identifiers.json`
 
 - `friendly_name`: Displayed to user, not matched against
