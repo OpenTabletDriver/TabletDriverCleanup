@@ -148,15 +148,15 @@ struct DeviceDumper {}
 #[async_trait]
 impl Dumper for DeviceDumper {
     async fn dump(&self, state: &State) -> Result<(), ModuleError> {
-        dump_filtered(state, is_of_interest).await
+        dump_filtered(state, "devices.json", is_of_interest).await
     }
 
     async fn dumpall(&self, state: &State) -> Result<(), ModuleError> {
-        dump_filtered(state, |_| true).await
+        dump_filtered(state, "devices-all.json", |_| true).await
     }
 }
 
-async fn dump_filtered<F: Fn(&Device) -> bool>(state: &State, filter_fn: F) -> Result<(), ModuleError> {
+async fn dump_filtered<F: Fn(&Device) -> bool>(state: &State, output_file: &str, filter_fn: F) -> Result<(), ModuleError> {
     let inf_regex = Regex::new(r"^oem[0-9]+\.inf$").unwrap();
     let devices: Vec<Device> = enumerate_devices()
         .into_module_report(DEVICE_MODULE_NAME)?
@@ -166,7 +166,7 @@ async fn dump_filtered<F: Fn(&Device) -> bool>(state: &State, filter_fn: F) -> R
         .collect();
 
     let file_path =
-        get_path_to_dump(state, "devices.json").into_module_report(DEVICE_MODULE_NAME)?;
+        get_path_to_dump(state, output_file).into_module_report(DEVICE_MODULE_NAME)?;
     let dump_file = create_dump_file(&file_path).into_module_report(DEVICE_MODULE_NAME)?;
     let file_name = file_path.as_path().to_str().unwrap();
 

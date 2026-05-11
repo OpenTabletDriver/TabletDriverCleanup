@@ -150,15 +150,15 @@ struct DriverPackageDumper {}
 #[async_trait]
 impl Dumper for DriverPackageDumper {
     async fn dump(&self, state: &State) -> Result<(), ModuleError> {
-        dump_filtered(state, is_of_interest).await
+        dump_filtered(state, "driver-packages.json", is_of_interest).await
     }
 
     async fn dumpall(&self, state: &State) -> Result<(), ModuleError> {
-        dump_filtered(state, |_| true).await
+        dump_filtered(state, "driver-packages-all.json", |_| true).await
     }
 }
 
-async fn dump_filtered<F: Fn(&DriverPackage) -> bool>(state: &State, filter_fn: F) -> Result<(), ModuleError> {
+async fn dump_filtered<F: Fn(&DriverPackage) -> bool>(state: &State, output_file: &str, filter_fn: F) -> Result<(), ModuleError> {
     let driver_packages: Vec<DriverPackage> = enumerate_driver_packages()
         .into_module_report(MODULE_NAME)?
         .into_iter()
@@ -166,7 +166,7 @@ async fn dump_filtered<F: Fn(&DriverPackage) -> bool>(state: &State, filter_fn: 
         .collect();
 
     let file_path =
-        get_path_to_dump(state, "driver-packages.json").into_module_report(MODULE_NAME)?;
+        get_path_to_dump(state, output_file).into_module_report(MODULE_NAME)?;
     let dump_file = create_dump_file(&file_path).into_module_report(MODULE_NAME)?;
     let file_name = file_path.as_path().to_str().unwrap();
 

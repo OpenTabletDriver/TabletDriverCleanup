@@ -124,15 +124,15 @@ struct DriverDumper {}
 #[async_trait]
 impl Dumper for DriverDumper {
     async fn dump(&self, state: &State) -> Result<(), ModuleError> {
-        dump_filtered(state, is_of_interest).await
+        dump_filtered(state, "drivers.json", is_of_interest).await
     }
 
     async fn dumpall(&self, state: &State) -> Result<(), ModuleError> {
-        dump_filtered(state, |_| true).await
+        dump_filtered(state, "drivers-all.json", |_| true).await
     }
 }
 
-async fn dump_filtered<F: Fn(&Driver) -> bool>(state: &State, filter_fn: F) -> Result<(), ModuleError> {
+async fn dump_filtered<F: Fn(&Driver) -> bool>(state: &State, output_file: &str, filter_fn: F) -> Result<(), ModuleError> {
     let drivers: Vec<Driver> = enumerate_drivers()
         .into_module_report(DRIVER_MODULE_NAME)?
         .into_iter()
@@ -140,7 +140,7 @@ async fn dump_filtered<F: Fn(&Driver) -> bool>(state: &State, filter_fn: F) -> R
         .collect();
 
     let file_path =
-        get_path_to_dump(state, "drivers.json").into_module_report(DRIVER_MODULE_NAME)?;
+        get_path_to_dump(state, output_file).into_module_report(DRIVER_MODULE_NAME)?;
     let dump_file = create_dump_file(&file_path).into_module_report(DRIVER_MODULE_NAME)?;
     let file_name = file_path.as_path().to_str().unwrap();
 
