@@ -148,36 +148,44 @@ struct DeviceDumper {}
 #[async_trait]
 impl Dumper for DeviceDumper {
     async fn dump(&self, state: &State) -> Result<(), ModuleError> {
-        let inf_regex = Regex::new(r"^oem[0-9]+\.inf$").unwrap();
-        let devices: Vec<Device> = enumerate_devices()
-            .into_module_report(DEVICE_MODULE_NAME)?
-            .into_iter()
-            .filter(|d| inf_regex.is_match(d.inf_name().unwrap_or("")))
-            .filter(is_of_interest)
-            .collect();
-
-        let file_path =
-            get_path_to_dump(state, "devices.json").into_module_report(DEVICE_MODULE_NAME)?;
-        let dump_file = create_dump_file(&file_path).into_module_report(DEVICE_MODULE_NAME)?;
-        let file_name = file_path.as_path().to_str().unwrap();
-
-        if devices.is_empty() {
-            println!("No devices to dump");
-            return Ok(());
-        }
-
-        serde_json::to_writer_pretty(dump_file, &devices)
-            .into_report()
-            .attach_printable_lazy(|| format!("failed to dump devices into '{}'", file_name))
-            .into_module_report(DEVICE_MODULE_NAME)?;
-
-        match devices.len() {
-            1 => println!("Dumped 1 device to {}", file_name),
-            n => println!("Dumped {} devices to {}", n, file_name),
-        }
-
-        Ok(())
+        dump_filtered(state, is_of_interest).await
     }
+
+    async fn dumpall(&self, state: &State) -> Result<(), ModuleError> {
+        dump_filtered(state, |_| true).await
+    }
+}
+
+async fn dump_filtered<F: Fn(&Device) -> bool>(state: &State, filter_fn: F) -> Result<(), ModuleError> {
+    let inf_regex = Regex::new(r"^oem[0-9]+\.inf$").unwrap();
+    let devices: Vec<Device> = enumerate_devices()
+        .into_module_report(DEVICE_MODULE_NAME)?
+        .into_iter()
+        .filter(|d| inf_regex.is_match(d.inf_name().unwrap_or("")))
+        .filter(filter_fn)
+        .collect();
+
+    let file_path =
+        get_path_to_dump(state, "devices.json").into_module_report(DEVICE_MODULE_NAME)?;
+    let dump_file = create_dump_file(&file_path).into_module_report(DEVICE_MODULE_NAME)?;
+    let file_name = file_path.as_path().to_str().unwrap();
+
+    if devices.is_empty() {
+        println!("No devices to dump");
+        return Ok(());
+    }
+
+    serde_json::to_writer_pretty(dump_file, &devices)
+        .into_report()
+        .attach_printable_lazy(|| format!("failed to dump devices into '{}'", file_name))
+        .into_module_report(DEVICE_MODULE_NAME)?;
+
+    match devices.len() {
+        1 => println!("Dumped 1 device to {}", file_name),
+        n => println!("Dumped {} devices to {}", n, file_name),
+    }
+
+    Ok(())
 }
 
 #[derive(Deserialize, Debug)]
