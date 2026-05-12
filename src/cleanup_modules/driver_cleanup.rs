@@ -132,15 +132,18 @@ impl Dumper for DriverDumper {
     }
 }
 
-async fn dump_filtered<F: Fn(&Driver) -> bool>(state: &State, output_file: &str, filter_fn: F) -> Result<(), ModuleError> {
+async fn dump_filtered<F: Fn(&Driver) -> bool>(
+    state: &State,
+    output_file: &str,
+    filter_fn: F,
+) -> Result<(), ModuleError> {
     let drivers: Vec<Driver> = enumerate_drivers()
         .into_module_report(DRIVER_MODULE_NAME)?
         .into_iter()
         .filter(filter_fn)
         .collect();
 
-    let file_path =
-        get_path_to_dump(state, output_file).into_module_report(DRIVER_MODULE_NAME)?;
+    let file_path = get_path_to_dump(state, output_file).into_module_report(DRIVER_MODULE_NAME)?;
     let dump_file = create_dump_file(&file_path).into_module_report(DRIVER_MODULE_NAME)?;
     let file_name = file_path.as_path().to_str().unwrap();
 

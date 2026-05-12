@@ -158,15 +158,18 @@ impl Dumper for DriverPackageDumper {
     }
 }
 
-async fn dump_filtered<F: Fn(&DriverPackage) -> bool>(state: &State, output_file: &str, filter_fn: F) -> Result<(), ModuleError> {
+async fn dump_filtered<F: Fn(&DriverPackage) -> bool>(
+    state: &State,
+    output_file: &str,
+    filter_fn: F,
+) -> Result<(), ModuleError> {
     let driver_packages: Vec<DriverPackage> = enumerate_driver_packages()
         .into_module_report(MODULE_NAME)?
         .into_iter()
         .filter(filter_fn)
         .collect();
 
-    let file_path =
-        get_path_to_dump(state, output_file).into_module_report(MODULE_NAME)?;
+    let file_path = get_path_to_dump(state, output_file).into_module_report(MODULE_NAME)?;
     let dump_file = create_dump_file(&file_path).into_module_report(MODULE_NAME)?;
     let file_name = file_path.as_path().to_str().unwrap();
 
@@ -177,9 +180,7 @@ async fn dump_filtered<F: Fn(&DriverPackage) -> bool>(state: &State, output_file
 
     serde_json::to_writer_pretty(dump_file, &driver_packages)
         .into_report()
-        .attach_printable_lazy(|| {
-            format!("failed to dump driver packages into '{}'", file_name)
-        })
+        .attach_printable_lazy(|| format!("failed to dump driver packages into '{}'", file_name))
         .into_module_report(MODULE_NAME)?;
 
     match driver_packages.len() {
