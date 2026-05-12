@@ -167,6 +167,11 @@
     "display_name": "Veikk \\(WinUsb\\) USBVeikk"
   },
   {
+    "friendly_name": "Windows Driver Package - Veikk (vkmoufilter) Mouse",
+    "uninstall_method": "RegistryOnly",
+    "display_name": "Veikk \\(vkmoufilter\\) Mouse"
+  },
+  {
     "friendly_name": "Xencelabs v1.1.x",
     "uninstall_method": "Deferred",
     "display_name": "Xencelabs",
