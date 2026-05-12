@@ -121,6 +121,12 @@
     "display_version": "^2"
   },
   {
+    "friendly_name": "Veikk Tablet Driver v3.x",
+    "uninstall_method": "Deferred",
+    "display_name": "Veikk ?Tablet",
+    "display_version": "^3"
+  },
+  {
     "friendly_name": "Wacom Tablet v6.3.x",
     "uninstall_method": "Normal",
     "display_name": "Wacom Tablet",
