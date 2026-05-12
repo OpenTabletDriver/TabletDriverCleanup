@@ -62,3 +62,5 @@ For those who want to build the project from source:
 - Run `build.ps1` in the root directory
 
 The binaries will be in `build`.
+
+## [Dev Docs](./dev_docs.md)

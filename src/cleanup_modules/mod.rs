@@ -178,6 +178,7 @@ pub struct ModuleRunInfo {
 #[async_trait]
 pub trait Dumper {
     async fn dump(&self, state: &State) -> Result<(), ModuleError>;
+    async fn dumpall(&self, state: &State) -> Result<(), ModuleError>;
 }
 
 fn get_path_to_dump(state: &State, filename: &str) -> Result<PathBuf, std::io::Error> {

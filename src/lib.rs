@@ -181,11 +181,13 @@ pub async fn dump(config: Config) {
             None => continue,
         };
 
-        let result = dumper.dump(&state).await;
-        if let Err(err) = result {
-            eprintln!("{:?}", err);
-            eprintln!()
-        }
+        let results = [dumper.dump(&state).await, dumper.dumpall(&state).await];
+        results.iter().for_each(|result| {
+            if let Err(err) = result {
+                eprintln!("{:?}", err);
+                eprintln!()
+            }
+        });
     }
 }
 

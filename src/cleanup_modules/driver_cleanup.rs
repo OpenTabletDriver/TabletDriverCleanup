@@ -124,34 +124,45 @@ struct DriverDumper {}
 #[async_trait]
 impl Dumper for DriverDumper {
     async fn dump(&self, state: &State) -> Result<(), ModuleError> {
-        let drivers: Vec<Driver> = enumerate_drivers()
-            .into_module_report(DRIVER_MODULE_NAME)?
-            .into_iter()
-            .filter(is_of_interest)
-            .collect();
-
-        let file_path =
-            get_path_to_dump(state, "drivers.json").into_module_report(DRIVER_MODULE_NAME)?;
-        let dump_file = create_dump_file(&file_path).into_module_report(DRIVER_MODULE_NAME)?;
-        let file_name = file_path.as_path().to_str().unwrap();
-
-        if drivers.is_empty() {
-            println!("No drivers to dump");
-            return Ok(());
-        }
-
-        serde_json::to_writer_pretty(dump_file, &drivers)
-            .into_report()
-            .attach_printable_lazy(|| format!("failed to dump drivers into '{}'", file_name))
-            .into_module_report(DRIVER_MODULE_NAME)?;
-
-        match drivers.len() {
-            1 => println!("Dumped 1 driver into '{}'", file_name),
-            n => println!("Dumped {} drivers into '{}'", n, file_name),
-        }
-
-        Ok(())
+        dump_filtered(state, "drivers.json", is_of_interest).await
     }
+
+    async fn dumpall(&self, state: &State) -> Result<(), ModuleError> {
+        dump_filtered(state, "drivers-all.json", |_| true).await
+    }
+}
+
+async fn dump_filtered<F: Fn(&Driver) -> bool>(
+    state: &State,
+    output_file: &str,
+    filter_fn: F,
+) -> Result<(), ModuleError> {
+    let drivers: Vec<Driver> = enumerate_drivers()
+        .into_module_report(DRIVER_MODULE_NAME)?
+        .into_iter()
+        .filter(filter_fn)
+        .collect();
+
+    let file_path = get_path_to_dump(state, output_file).into_module_report(DRIVER_MODULE_NAME)?;
+    let dump_file = create_dump_file(&file_path).into_module_report(DRIVER_MODULE_NAME)?;
+    let file_name = file_path.as_path().to_str().unwrap();
+
+    if drivers.is_empty() {
+        println!("No drivers to dump");
+        return Ok(());
+    }
+
+    serde_json::to_writer_pretty(dump_file, &drivers)
+        .into_report()
+        .attach_printable_lazy(|| format!("failed to dump drivers into '{}'", file_name))
+        .into_module_report(DRIVER_MODULE_NAME)?;
+
+    match drivers.len() {
+        1 => println!("Dumped 1 driver into '{}'", file_name),
+        n => println!("Dumped {} drivers into '{}'", n, file_name),
+    }
+
+    Ok(())
 }
 
 #[derive(Deserialize, Debug)]

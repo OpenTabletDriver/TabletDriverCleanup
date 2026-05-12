@@ -55,6 +55,12 @@
     "display_version": "^15"
   },
   {
+    "friendly_name": "Huion v20.x",
+    "uninstall_method": "Deferred",
+    "display_name": "Huion ?Tablet",
+    "display_version": "^20"
+  },
+  {
     "friendly_name": "Kenting Tablet v14.x",
     "uninstall_method": "Normal",
     "display_name": "Kenting Tablet",
@@ -115,6 +121,12 @@
     "display_version": "^2"
   },
   {
+    "friendly_name": "Veikk Tablet Driver v3.x",
+    "uninstall_method": "Deferred",
+    "display_name": "Veikk ?Tablet",
+    "display_version": "^3"
+  },
+  {
     "friendly_name": "Wacom Tablet v6.3.x",
     "uninstall_method": "Normal",
     "display_name": "Wacom Tablet",
@@ -155,16 +167,27 @@
     "display_name": "Veikk \\(WinUsb\\) USBVeikk"
   },
   {
-    "friendly_name": "Xencelabs v1.1",
+    "friendly_name": "Windows Driver Package - Veikk (vkmoufilter) Mouse",
+    "uninstall_method": "RegistryOnly",
+    "display_name": "Veikk \\(vkmoufilter\\) Mouse"
+  },
+  {
+    "friendly_name": "Xencelabs v1.1.x",
     "uninstall_method": "Deferred",
     "display_name": "Xencelabs",
     "display_version": "^1.1"
   },
   {
-    "friendly_name": "Xencelabs v1.2",
+    "friendly_name": "Xencelabs v1.2.x",
     "uninstall_method": "Deferred",
     "display_name": "Xencelabs",
     "display_version": "^1.2"
+  },
+  {
+    "friendly_name": "Xencelabs v1.3.x",
+    "uninstall_method": "Deferred",
+    "display_name": "Xencelabs",
+    "display_version": "^1.3"
   },
   {
     "friendly_name": "XENX Driver v1.x",
@@ -177,6 +200,13 @@
     "uninstall_method": "Deferred",
     "display_name": "Pentablet",
     "display_version": "^3",
+    "publisher": "XP[-| ]?Pen"
+  },
+  {
+    "friendly_name": "XP-Pen Driver v4.x",
+    "uninstall_method": "Deferred",
+    "display_name": "XPPenTablet",
+    "display_version": "^4",
     "publisher": "XP[-| ]?Pen"
   }
 ]
