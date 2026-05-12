@@ -178,5 +178,12 @@
     "display_name": "Pentablet",
     "display_version": "^3",
     "publisher": "XP[-| ]?Pen"
+  },
+  {
+    "friendly_name": "XP-Pen Driver v4.x",
+    "uninstall_method": "Deferred",
+    "display_name": "XPPenTablet",
+    "display_version": "^4",
+    "publisher": "XP[-| ]?Pen"
   }
 ]
