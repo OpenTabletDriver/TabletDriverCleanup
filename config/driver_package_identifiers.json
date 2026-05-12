@@ -55,6 +55,12 @@
     "display_version": "^15"
   },
   {
+    "friendly_name": "Huion v20.x",
+    "uninstall_method": "Deferred",
+    "display_name": "Huion ?Tablet",
+    "display_version": "^20"
+  },
+  {
     "friendly_name": "Kenting Tablet v14.x",
     "uninstall_method": "Normal",
     "display_name": "Kenting Tablet",
