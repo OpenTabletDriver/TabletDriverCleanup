@@ -26,7 +26,9 @@ pub fn cached_match(input: Option<&str>, regex_pattern: Option<&str>) -> bool {
             Some(regex) => regex,
             None => {
                 let regex = build_regex(regex_pattern);
-                let Entry::Vacant(vacant) = cache.entry(regex_pattern.to_string()) else { unreachable!() };
+                let Entry::Vacant(vacant) = cache.entry(regex_pattern.to_string()) else {
+                    unreachable!()
+                };
                 vacant.insert(regex)
             }
         }
